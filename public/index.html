@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Carga números de Guatemala y envía notificaciones de Mujer MP por WhatsApp o SMS."
+    />
+    <title>Envíos Mujer MP</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Mujer MP · Centro de envíos</p>
+          <h1>Una lista. Dos canales.</h1>
+          <p class="intro">
+            Carga los números, revisa el total y elige cómo enviar la notificación.
+          </p>
+        </div>
+        <div class="country-mark" aria-label="Todos los números se enviarán con código de Guatemala">
+          <span aria-hidden="true">GT</span>
+          <strong>+502</strong>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <section class="panel panel--form" aria-labelledby="list-title">
+          <div class="section-heading">
+            <span class="step" aria-hidden="true">01</span>
+            <div>
+              <h2 id="list-title">Lista de destinatarias</h2>
+              <p>Una fila por número, sin agregar +502.</p>
+            </div>
+          </div>
+
+          <div class="key-field">
+            <label for="api-key">Clave interna de la API</label>
+            <input
+              id="api-key"
+              type="password"
+              autocomplete="current-password"
+              aria-describedby="key-help"
+            />
+            <p id="key-help" class="helper">
+              Pega primero el valor de <code>INTERNAL_API_KEY</code>. No se guarda en el navegador.
+            </p>
+          </div>
+
+          <label class="file-field" for="numbers-file">
+            <span class="file-field__title">Seleccionar archivo Excel</span>
+            <span class="file-field__hint">Formato .xlsx · máximo 2 MB</span>
+            <input
+              id="numbers-file"
+              name="file"
+              type="file"
+              accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              aria-describedby="file-help file-error"
+            />
+          </label>
+          <p id="file-help" class="helper">
+            La columna debe llamarse <code>telefono</code>. Se eliminarán duplicados.
+          </p>
+          <p id="file-error" class="field-error" role="alert"></p>
+
+          <a class="template-link" href="/plantilla_numeros.xlsx" download>
+            Descargar plantilla de Excel
+          </a>
+
+          <div id="summary" class="summary" hidden aria-live="polite">
+            <div>
+              <strong id="valid-count">0</strong>
+              <span>válidos</span>
+            </div>
+            <div>
+              <strong id="duplicate-count">0</strong>
+              <span>duplicados</span>
+            </div>
+            <div>
+              <strong id="invalid-count">0</strong>
+              <span>inválidos</span>
+            </div>
+          </div>
+
+        </section>
+
+        <section class="panel panel--message" aria-labelledby="message-title">
+          <div class="section-heading">
+            <span class="step" aria-hidden="true">02</span>
+            <div>
+              <h2 id="message-title">Notificación</h2>
+              <p>WhatsApp requiere que la plantilla <code id="template-name">mp_mujer</code> esté aprobada.</p>
+            </div>
+          </div>
+
+          <div class="message-preview" aria-label="Vista previa del mensaje">
+            <div class="message-preview__meta">
+              <span>Mujer MP</span>
+              <span>Vista previa</span>
+            </div>
+            <p id="message-preview-text"></p>
+          </div>
+
+          <label for="sms-message">Texto para SMS</label>
+          <textarea
+            id="sms-message"
+            rows="6"
+            maxlength="4096"
+            aria-describedby="sms-help"
+          ></textarea>
+          <p id="sms-help" class="helper">
+            <span id="character-count">0</span> caracteres. El costo depende de los segmentos SMS.
+          </p>
+
+          <div class="actions" aria-label="Canal de envío">
+            <button id="send-whatsapp" class="button button--whatsapp" type="button" disabled>
+              Enviar por WhatsApp
+            </button>
+            <button id="send-sms" class="button button--sms" type="button" disabled>
+              Enviar por SMS
+            </button>
+          </div>
+
+          <div id="send-status" class="send-status" role="status" aria-live="polite"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
